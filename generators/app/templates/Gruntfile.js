@@ -45,20 +45,20 @@ module.exports = function (grunt) {
 
     // Configuration to be run (and then tested).
     <%= shortName %>: {
-      default_options: {
+      default: {
         options: {
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/default': ['test/fixtures/testing', 'test/fixtures/123']
         }
       },
-      custom_options: {
+      custom: {
         options: {
           separator: ': ',
           punctuation: ' !!!'
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/custom': ['test/fixtures/testing', 'test/fixtures/123']
         }
       }
     },

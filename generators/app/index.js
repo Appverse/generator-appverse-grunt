@@ -20,8 +20,9 @@
  */
 'use strict';
 var pkg = require('../../package.json');
-var appverse = require ('appverse-common-generator');
+var appverse = require ('appverse-generator-commons');
 var npmName = require('npm-name');
+var _ = require ('lodash');
 
 module.exports = appverse.extend({
   initializing: function () {
@@ -33,10 +34,11 @@ module.exports = appverse.extend({
     var done = this.async();
     var prompts = [{
     name: 'name',
-    message: 'Grunt Plugin Name',
-    default : this.appname, // Default to current folder name
+    message: 'Appverse Grunt Plugin Name',
+    default : _.kebabCase(this.appname) , // Default to current folder name
     filter: function (value) {
       var done = this.async();
+      value = _.kebabCase(value);
       var contribRegex = /^grunt-contrib/;
       if (contribRegex.test(value)) {
         this.error(
@@ -44,6 +46,10 @@ module.exports = appverse.extend({
           '\nnamespace would like to be reserved for tasks maintained by the grunt team.'
         );
         value = value.replace(contribRegex, 'grunt');
+      }
+      var appverseRegex = /^grunt-appverse-/;
+      if (!appverseRegex.test(value)) {
+        value = 'grunt-appverse-' + value;
       }
       npmName(value, function (err, available) {
         if (!available) {
@@ -115,8 +121,8 @@ module.exports = appverse.extend({
     this.fs.write(this.destinationPath('package.json'), JSON.stringify(targetPackage, null, 2));
   },
   projectfiles: function () {
-    this.shortName = this.props.name.replace(/^grunt[\-_]?/, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
-    this.moveFiles(this.templatePath(), ['.editorconfig', '.jshintrc', 'test/expected', 'test/fixtures']); 
+    this.shortName = this.props.name.replace(/^grunt-appverse[\-_]?/, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+    this.moveFiles(this.templatePath(), ['.editorconfig', '.jshintrc', 'test/expected', 'test/fixtures']);
     this.moveTemplates(this.templatePath(), ['Gruntfile.js', 'README.md']);
     //TEMPLATES
     var namedTemplateList = ['tasks/$name.js', 'test/$name_test.js'];
@@ -130,7 +136,9 @@ module.exports = appverse.extend({
    });
  },
  end : function () {
+   this.info ('Your grunt plgugin is ready.');
    this.info(' For more information about Grunt plugin best practices,' +
   ' please see the docs at http://gruntjs.com/creating-plugins \n');
+  this.info('Execute \'grunt test\' to run the grunt plugin test with nodeunit ');
  }
 });

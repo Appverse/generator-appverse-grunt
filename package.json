@@ -2,7 +2,7 @@
   "name": "generator-appverse-grunt",
   "version": "0.0.1",
   "description": "Appverse Grunt plugin generator",
-  "license": "MIT",
+  "license": "MPL-2.0",
   "main": "app/index.js",
   "repository": "appverse/generator-appverse-grunt",
   "author": {
@@ -24,10 +24,11 @@
     "task"
   ],
   "dependencies": {
-    "appverse-common-generator": "0.0.1",
+    "appverse-generator-commons": "0.0.2",
     "chalk": "^1.0.0",
+    "lodash": "^3.10.1",
     "npm-name": "^1.1.1",
-    "yeoman-generator": "^0.19.0",
+    "yeoman-generator": "^0.21.1",
     "yosay": "^1.0.2"
   },
   "devDependencies": {
