@@ -16,12 +16,29 @@ To install generator-appverse-grunt from npm, run:
 ```bash
 npm install -g generator-appverse-grunt
 ```
+Create a new folder for your project
+
+```bash
+mkdir mytask
+```
+
+```bash
+cd mytask
+```
 
 Finally, initiate the generator:
 
 ```bash
 yo appverse-grunt
 ```
+
+The generator will build the package name for you using *grunt-appverse* prefix, so the final package name will be *grunt-appverse-mytask*.
+Moreover, it will add some [nodeunit](https://github.com/caolan/nodeunit) test samples to the generated project. You can execute them using:
+
+```bash
+grunt test
+```
+
 
 ## License
 
